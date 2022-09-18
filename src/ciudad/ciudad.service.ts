@@ -75,7 +75,7 @@ export class CiudadService {
     const listaPaises = ['Argentina', 'Ecuador', 'Paraguay'];
     if (!listaPaises.includes(nombre))
       throw new BusinessLogicException(
-        'La ciudad no pertenece a la lista de paises',
+        'El pais no pertenece a la lista permitida',
         BusinessError.NOT_FOUND,
       );
   }
