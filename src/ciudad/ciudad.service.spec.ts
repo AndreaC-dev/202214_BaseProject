@@ -5,7 +5,7 @@ import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-co
 import { CiudadEntity } from './ciudad.entity';
 import { faker } from '@faker-js/faker';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { randomInt } from 'crypto';
+
 describe('CiudadService', () => {
   let service: CiudadService;
   let repository: Repository<CiudadEntity>;
@@ -31,7 +31,7 @@ describe('CiudadService', () => {
       const ciudad: CiudadEntity = await repository.save({
         nombre: faker.company.name(),
         pais: 'Argentina',
-        numHabitantes: Math.random(),
+        numHabitantes: Math.floor(Math.random() * 1000000),
       });
       ciudadesList.push(ciudad);
     }
@@ -68,7 +68,7 @@ describe('CiudadService', () => {
       id: '',
       nombre: faker.company.name(),
       pais: 'Ecuador',
-      numHabitantes: Math.random(),
+      numHabitantes: Math.floor(Math.random() * 1000000),
       supermercados: [],
     };
 
@@ -89,7 +89,7 @@ describe('CiudadService', () => {
       id: '',
       nombre: faker.company.name(),
       pais: 'Brasil',
-      numHabitantes: Math.random(),
+      numHabitantes: Math.floor(Math.random() * 1000000),
       supermercados: [],
     };
     await expect(() => service.create(ciudad)).rejects.toHaveProperty(
@@ -102,7 +102,7 @@ describe('CiudadService', () => {
     const city: CiudadEntity = ciudadesList[0];
     city.nombre = 'Nuevo nombre';
     city.pais = 'Paraguay';
-    city.numHabitantes = Math.random();
+    city.numHabitantes = Math.floor(Math.random() * 1000000);
     const updatedCity: CiudadEntity = await service.update(city.id, city);
     expect(updatedCity).not.toBeNull();
     const storedCity: CiudadEntity = await repository.findOne({
@@ -120,7 +120,7 @@ describe('CiudadService', () => {
       ...city,
       nombre: 'Nuevo nombre',
       pais: 'Paraguay',
-      numHabitantes: Math.random(),
+      numHabitantes: Math.floor(Math.random() * 1000000),
     };
     await expect(() => service.update('0', city)).rejects.toHaveProperty(
       'message',
@@ -134,7 +134,7 @@ describe('CiudadService', () => {
       ...city,
       nombre: 'Nuevo nombre',
       pais: 'Mexico',
-      numHabitantes: Math.random(),
+      numHabitantes: Math.floor(Math.random() * 1000000),
     };
     await expect(() => service.update('0', city)).rejects.toHaveProperty(
       'message',
@@ -145,10 +145,10 @@ describe('CiudadService', () => {
   it('delete should remove a city', async () => {
     const city: CiudadEntity = ciudadesList[0];
     await service.delete(city.id);
-    const deletedCulture: CiudadEntity = await repository.findOne({
+    const deletedCity: CiudadEntity = await repository.findOne({
       where: { id: `${city.id}` },
     });
-    expect(deletedCulture).toBeNull();
+    expect(deletedCity).toBeNull();
   });
 
   it('delete should throw an exception for an invalid city', async () => {

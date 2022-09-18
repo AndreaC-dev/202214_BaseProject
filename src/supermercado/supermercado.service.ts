@@ -16,7 +16,7 @@ export class SupermercadoService {
 
   async findAll(): Promise<SupermercadoEntity[]> {
     return await this.supermercadoRepository.find({
-      relations: ['supermercados'],
+      relations: ['ciudades'],
     });
   }
 
