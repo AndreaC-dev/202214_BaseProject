@@ -241,11 +241,10 @@ describe('CiudadSupermercadoService', () => {
       where: { id: `${city.id}` },
       relations: ['supermercados'],
     });
-    const deletedRestaurant: SupermercadoEntity = storedCity.supermercados.find(
-      (a) => a.id === supermercado.id,
-    );
+    const deletedSupermarket: SupermercadoEntity =
+      storedCity.supermercados.find((a) => a.id === supermercado.id);
 
-    expect(deletedRestaurant).toBeUndefined();
+    expect(deletedSupermarket).toBeUndefined();
   });
 
   it('deleteSupermarketFromCity should thrown an exception for an invalid supermercado', async () => {

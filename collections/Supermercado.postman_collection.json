@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "739fb372-ee51-4ea0-885d-2be6daded879",
+		"name": "Supermercado",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23291062"
+	},
+	"item": [
+		{
+			"name": "Crear un supermercado válido.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"supermarket\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nombre\": \"mercacentro Supermercado\",\r\n   \"longitud\": \"25\",\r\n   \"latitud\": \"32\",\r\n   \"pagWeb\": \"https://www.mercacentro.com/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add un supermercado",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nombre\": \"El Cielo\",\r\n   \"ciudad\": \"Bogotá\",\r\n   \"idPais\": \"48a9ab90-1276-11ed-861d-0242ac120002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"id\": \"144602ac-1278-11ed-861d-0242ac120002\",\n    \"nombre\": \"El Cielo\",\n    \"ciudad\": \"Bogotá\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Crear un supermercado inválido.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El nombre del supermercado debe tener más de 10 caracteres\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nombre\": \"Carulla\",\r\n   \"longitud\": \"68\",\r\n   \"latitud\": \"25\",\r\n   \"pagWeb\": \"https://www.carulla.com/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add un supermercado",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nombre\": \"El Cielo\",\r\n   \"ciudad\": \"Bogotá\",\r\n   \"idPais\": \"48a9ab90-1276-11ed-861d-0242ac120002\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"id\": \"144602ac-1278-11ed-861d-0242ac120002\",\n    \"nombre\": \"El Cielo\",\n    \"ciudad\": \"Bogotá\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener todos los supermercados.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Numero de supermarkets > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get todos los supermarkets",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "[\n    {      \n        \"id\": \"14f05d0e-127fg5-11ed-861d-0242ac120032\",\n        \"nombre\": \"El Clielo\",\n        \"ciudad\": \"Bógota\",       \n        \"pais\" :  {\n                \"id\": \"2b061964-1276-11ed-861d-0242ac120009\",\n                \"nombre\": \"Colombia\"\n                },\n        \"ciudades\": [\n            {  \"id\": \"2b061964-1276-11ed-861d-0242ac120005\",\n                \"nombre\": \"Buenos Aires\",\n                \"pais\": \"Argentina\"\n            }\n          ],\n        \"estrellas_michelin\": [\n            {\n                \"id\": \"14f05d0e-1275-11ed-86dd-0242ac120032\",\n                \"fechaConsecucion\": \"10/12/2021\",\n                \"cantidad\": \"5\"\n            },\n            {\n                \"id\": \"14f05fgfd0e-1275-11ed-861d-0242ac120032\",\n                \"fechaConsecucion\": \"10/02/2022\",\n                \"cantidad\": \"3\"\n            }\n        ]           \n    },\n    {\n        \"id\": \"2e061964-1276-11ed-861d-0242ac120002\",\n        \"nombre\": \"Itanos\",\n        \"ciudad\": \"Bógota\",        \n        \"pais\" :  {\n                \"id\": \"2b061964-1276-11ed-861d-0242ac120009\",\n                \"nombre\": \"Colombia\"\n                },\n        \"ciudades\": [\n                {  \"id\": \"2b061964-1276-11ed-861d-0242ac120005\",\n                    \"nombre\": \"Buenos Aires\",\n                    \"pais\": \"Argentina\"\n                }\n            ],\n        \"estrellas_michelin\": [\n            {\n                \"id\": \"14f05d0e-1275-11ed-86dd-0242ac120032\",\n                \"fechaConsecucion\": \"10/12/2021\",\n                \"cantidad\": \"5\"\n            },\n            {\n                \"id\": \"14f05fgfd0e-1275-11ed-861d-0242ac120032\",\n                \"fechaConsecucion\": \"10/02/2022\",\n                \"cantidad\": \"3\"\n            }\n        ]        \n            \n    }       \n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener un supermercado por ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets/{{supermarket}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets",
+						"{{supermarket}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get un supermercado",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets/{{supermarket}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets",
+								"{{supermarket}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-127fg5-11ed-861d-0242ac120032\",\n    \"nombre\": \"El Clielo\",\n    \"ciudad\": \"Bógota\",\n    \"pais\":{\n            \"id\": \"2b061964-1276-11ed-861d-0242ac120009\",\n            \"nombre\": \"Colombia\"},\n    \"ciudades\": [\n        {  \"id\": \"2b061964-1276-11ed-861d-0242ac120005\",\n            \"nombre\": \"Buenos Aires\",\n            \"pais\": \"Argentina\"\n        }\n    ],\n    \"estrellas_michelin\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-86dd-0242ac120032\",\n            \"fechaConsecucion\": \"10/12/2021\",\n            \"cantidad\": \"5\"\n        },\n        {\n            \"id\": \"14f05fgfd0e-1275-11ed-861d-0242ac120032\",\n            \"fechaConsecucion\": \"10/02/2022\",\n            \"cantidad\": \"3\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener un supermercado por un ID que no existe.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El supermercado con el id enviado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get un supermercado invalido",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"El supermercado con el id enviado no fue encontrado\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar un supermercado.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nombre\": \"mercacentro No. 4 Supermercado\",\r\n   \"longitud\": \"355\",\r\n   \"latitud\": \"38\",\r\n   \"pagWeb\": \"https://www.mercacentro.com/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets/{{supermarket}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets",
+						"{{supermarket}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update un supermercado",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nombre\": \"El Cielo\",\r\n   \"ciudad\": \"Medellin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets/{{supermarket}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets",
+								"{{supermarket}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-127fg5-11ed-861d-0242ac120032\",\n    \"nombre\": \"El Clielo\",\n    \"ciudad\": \"Medellin\",\n    \"pais\":{\n            \"id\": \"2b061964-1276-11ed-861d-0242ac120009\",\n            \"nombre\": \"Colombia\"},\n    \"ciudades\": [\n        {  \"id\": \"2b061964-1276-11ed-861d-0242ac120005\",\n            \"nombre\": \"Buenos Aires\",\n            \"pais\": \"Argentina\"\n        }\n    ],\n    \"estrellas_michelin\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-86dd-0242ac120032\",\n            \"fechaConsecucion\": \"10/12/2021\",\n            \"cantidad\": \"5\"\n        },\n        {\n            \"id\": \"14f05fgfd0e-1275-11ed-861d-0242ac120032\",\n            \"fechaConsecucion\": \"10/02/2022\",\n            \"cantidad\": \"3\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar un supermercado con un ID que no existe.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El supermercado con el id enviado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nombre\": \"mercacentro No. 4 Supermercado\",\r\n   \"longitud\": \"355\",\r\n   \"latitud\": \"38\",\r\n   \"pagWeb\": \"https://www.mercacentro.com/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update un supermercado invalido",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"El supermercado con el id enviado no fue encontrado\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar un supermercado por su ID.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets/{{supermarket}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets",
+						"{{supermarket}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete un supermercado",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/supermarkets/{{supermarket}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"supermarkets",
+								"{{supermarket}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Eliminar un supermercado con un ID que no existe.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El supermercado con el id enviado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/supermarkets/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"supermarkets",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete un supermercado invalido",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/estrellas-michelling/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"estrellas-michelling",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"El supermercado con el id enviado no fue encontrado\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1"
+		}
+	]
+}

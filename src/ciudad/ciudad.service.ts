@@ -76,7 +76,7 @@ export class CiudadService {
     if (!listaPaises.includes(nombre))
       throw new BusinessLogicException(
         'El pais no pertenece a la lista permitida',
-        BusinessError.NOT_FOUND,
+        BusinessError.PRECONDITION_FAILED,
       );
   }
 }

@@ -81,7 +81,7 @@ export class SupermercadoService {
     if (nombre.length <= 10)
       throw new BusinessLogicException(
         'El nombre del supermercado debe tener más de 10 caracteres',
-        BusinessError.NOT_FOUND,
+        BusinessError.PRECONDITION_FAILED,
       );
   }
 }
